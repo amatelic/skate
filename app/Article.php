@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Storage;
+
 
 class Article extends Model
 {
@@ -14,4 +16,9 @@ class Article extends Model
    * @var array
    */
   protected $fillable = ['name', 'body','image_dir'];
+
+  public function scopegetImagesPath($query, $type)
+  {
+    return Storage::disk('public')->allFiles("/photos/" . $type);
+  }
 }

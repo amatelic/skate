@@ -1,4 +1,5 @@
 var elixir = require('laravel-elixir');
+require('laravel-elixir-livereload');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,5 +14,8 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app.sass')
-      .babel('app.js');
+      .browserify('gallerys.js')
+      .browserify('users.js')
+      .browserify('article.js')
+      .livereload();
 });

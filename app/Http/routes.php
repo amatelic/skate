@@ -1,5 +1,6 @@
 <?php
 use App\Article;
+use App\User;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -16,7 +17,17 @@ Route::get('/', function () {
     $articles = Article::all()->take(10);
     return view('index', compact('articles'));
 });
+
 Route::get('article/{id}', function ($id)
 {
-  return $id;
+  $article = Article::where("id", $id)->get();
+  return $article;
+});
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('/', 'AdminController');
+    Route::resource('/users', 'UserController');
+    Route::get('/users/filter', 'UserController@filterUsers');
+    Route::resource('/images', 'ImageController');
+
 });
