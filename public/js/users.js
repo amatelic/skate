@@ -9242,7 +9242,7 @@ var _usersModal2 = _interopRequireDefault(_usersModal);
 
   filter.on('keyup', function (e) {
     e.preventDefault();
-    UserTable.http('/users/filter', filter.val()).then(UserTable.displayUsers.bind(UserTable));
+    UserTable.http('/admin/users/filter', filter.val()).then(UserTable.displayUsers.bind(UserTable));
   });
 
   (0, _jquery2['default'])('.show-add-fields').on('click', function () {
@@ -9297,8 +9297,8 @@ var UsersTable = (function () {
 
       this.table.on('click', '#delete', function (e) {
         var id = $(e.target).data('id');
-        _this.http('/users/' + id, {}, 'DELETE').then(function (data) {
-          return console.log(data);
+        _this.http('/admin/users/' + id, {}, 'DELETE').then(function (data) {
+          return alert(data.text);
         });
       });
     }
@@ -9361,8 +9361,10 @@ var Modal = (function () {
       $('#save-modal').on('click', function (e) {
         var newInput = $(e.target).parent().siblings('.modal-body').find('input, select');
         var input = _this.getParams(newInput, 'val');
-        _this.http('/users/' + input.id, input, 'PUT').then(function (arg) {
-          console.log(arg);
+        _this.http('/admin/users/' + input.id, input, 'PUT').then(function (res) {
+          alert(res.text);
+        }, function (e) {
+          console.log(e);
         });
       });
     }
@@ -9381,7 +9383,7 @@ var Modal = (function () {
       return (0, _jquery.ajax)({
         method: method || 'GET',
         url: url,
-        data: { param: param }
+        data: param
       });
     }
   }, {

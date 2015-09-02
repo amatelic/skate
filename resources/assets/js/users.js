@@ -16,7 +16,7 @@ import Modal from './users/modal';
 
   filter.on('keyup', function (e) {
     e.preventDefault();
-    UserTable.http('/users/filter', filter.val())
+    UserTable.http('/admin/users/filter', filter.val())
     .then(UserTable.displayUsers.bind(UserTable));
   });
 

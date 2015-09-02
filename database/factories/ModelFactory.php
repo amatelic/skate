@@ -15,7 +15,7 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->email,
-        'rights' => "PP",
+        'rights' => "SKVO",
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
     ];
@@ -26,6 +26,6 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence,
         'body' => $faker->text,
         'body' => $faker->text,
-        'image_dir' => 'slike'
+        'image_dir' => $faker->colorName
     ];
 });

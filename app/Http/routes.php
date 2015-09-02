@@ -18,16 +18,18 @@ Route::get('/', function () {
     return view('index', compact('articles'));
 });
 
-Route::get('article/{id}', function ($id)
-{
-  $article = Article::where("id", $id)->get();
-  return $article;
-});
+// Route::get('article/{id}', function ($id)
+// {
+//   $article = Article::where("id", $id)->get();
+//   return $article;
+// });
 
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('/', 'AdminController');
-    Route::resource('/users', 'UserController');
     Route::get('/users/filter', 'UserController@filterUsers');
+    Route::resource('/users', 'UserController');
     Route::resource('/images', 'ImageController');
+    Route::get('/articlePagination/{id}', 'ArticleController@pagination');
+    Route::resource('/articles', 'ArticleController');
 
 });

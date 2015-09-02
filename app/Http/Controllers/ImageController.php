@@ -46,7 +46,8 @@ class ImageController extends Controller
         $name = time() . $file->getClientOriginalName();
 
         $file->move('photos/' . $article->image_dir, $name);
-        return "Dodano";
+
+        return "Slika je bila dodana.";
     }
 
     /**
@@ -70,7 +71,7 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        //
+          //
     }
 
     /**
@@ -82,7 +83,7 @@ class ImageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**
@@ -91,8 +92,11 @@ class ImageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+      $article = Article::where('id', $id)->first();
+      $img_file = $request->input('img');
+      Article::DeleteImage('photos/' . $article->image_dir. '/' . $img_file);
+      return 'Slika je bila zbrisana';
     }
 }

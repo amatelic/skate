@@ -20,7 +20,7 @@ export default class UsersTable {
     events(){
       this.table.on('click',  '#delete', (e) => {
         var id = $(e.target).data('id');
-        this.http('/users/'+id, {}, 'DELETE').then((data)=>console.log(data));
+        this.http('/admin/users/'+id, {}, 'DELETE').then((data)=>alert(data.text));
       });
     }
     displayUsers(users) {

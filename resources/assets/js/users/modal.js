@@ -17,9 +17,11 @@ export default class Modal {
     $('#save-modal').on('click', function (e) {
       let newInput = $(e.target).parent().siblings('.modal-body').find('input, select');
       var input = _this.getParams(newInput, 'val');
-      _this.http('/users/'+ input.id, input, 'PUT')
-        .then(function (arg) {
-          console.log(arg);
+      _this.http('/admin/users/'+ input.id, input, 'PUT')
+        .then(function (res) {
+          alert(res.text);
+        }, function (e) {
+          console.log(e);
         });
     });
   }
@@ -35,7 +37,7 @@ export default class Modal {
     return ajax({
       method: method || 'GET',
       url: url,
-      data: {param}
+      data: param
     });
   }
   template({id, name, email, role}){

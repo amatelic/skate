@@ -94,6 +94,21 @@ article
   width: 100%
   height: 150px
   background: red
-#images
+
+.images-cover
+  height: 222px
+  -webkit-box-shadow: 6px 6px 23px -6px rgba(0,0,0,0.75)
+  margin: 10px
+  padding-bottom: 50px
   img
     width: 100%
+  &:hover
+    position: relative
+    opacity: 0.5
+    &:before
+      left: 30%
+      top: 10%
+      width: 100%
+      display: block
+      position: absolute
+      content: url("https://cdn1.iconfinder.com/data/icons/toolbar-signs/512/trash-128.png")

@@ -9212,54 +9212,86 @@ return jQuery;
 
 },{}],2:[function(require,module,exports){
 /*jshint esnext: true */
+
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
 var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
 (function () {
-  var Article = (function () {
-    function Article(text, url) {
-      _classCallCheck(this, Article);
-
-      this.text = text;
-      this.url = url;
+  _jquery2['default'].ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': (0, _jquery2['default'])('meta[name="csrf-token"]').attr('content')
     }
+  });
 
-    _createClass(Article, [{
-      key: 'shortText',
-      value: function shortText() {
-        return this.text.substr(0, 10);
+  var topics = {};
+
+  _jquery2['default'].Topic = function (id) {
+    var callbacks,
+        topic = id && topics[id];
+    if (!topic) {
+      callbacks = jQuery.Callbacks();
+      topic = {
+        publish: callbacks.fire,
+        subscribe: callbacks.add,
+        unsubscribe: callbacks.remove
+      };
+      if (id) {
+        topics[id] = topic;
       }
-    }]);
-
-    return Article;
-  })();
-
-  var articles = document.querySelectorAll('article');
-
-  var collection = [];
-  var each = function each(col, fn) {
-    return Array.prototype.forEach.call(col, fn);
+    }
+    return topic;
   };
-  each(articles, function (article) {
-    //p elements
-    var text = (0, _jquery2['default'])(article.children[1]);
-    var a = article.children[3];
-    a.addEventListener('click', function (e) {
-      e.preventDefault();
-      text.slideToggle();
+
+  var form = (0, _jquery2['default'])('#articleForm');
+  var input = form.find('input');
+  var textarea = form.find('textarea');
+  var articleTable = (0, _jquery2['default'])('.artilceBody');
+  _jquery2['default'].Topic("add:new:user").subscribe(function (_ref) {
+    var name = _ref.name;
+    var body = _ref.body;
+
+    (0, _jquery2['default'])('#displayArticles').append('<h2>' + name + '<h2>');
+    (0, _jquery2['default'])('#displayArticles').append('<p>' + body + '<p>');
+  });
+
+  form.on('submit', function (e) {
+    e.preventDefault();
+    _jquery2['default'].ajax({
+      method: 'POST',
+      url: '/admin/articles',
+      data: {
+        name: input.val(),
+        body: textarea.val()
+      }
+
+    }).then(function (respond) {
+      _jquery2['default'].Topic("add:new:user").publish(respond);
     });
   });
 
-  new Article();
+  (0, _jquery2['default'])('.pagination').on('click', 'li', function (e) {
+    var target = (0, _jquery2['default'])(e.target);
+    console.log(target.html());
+    target.parent().addClass('active');
+    target.parent().siblings().removeClass('active');
+    _jquery2['default'].ajax({
+      method: 'get',
+      url: '/admin/articlePagination/' + target.html()
+    }).then(function (articles) {
+      articleTable.empty();
+      articles.forEach(function (_ref2) {
+        var title = _ref2.title;
+        var body = _ref2.body;
+
+        articleTable.append('<tr>\n          <td>' + title + '</td>\n          <td>\n            <button type="button" class="btn btn-primary">Spremeni</button>\n          </td>\n          <td>\n            <button type="button" class="btn btn-danger">Izbriši</button>\n          </td>\n          <tr>');
+      });
+    });
+  });
 })();
 
 },{"jquery":1}]},{},[2]);

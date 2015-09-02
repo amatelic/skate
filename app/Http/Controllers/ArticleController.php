@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use Illuminate\Http\Request;
-
+use App\Article;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class UserController extends Controller
+class ArticleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-      $users = User::all();
-      return view('admin.users', compact('users'));
+        $articles = Article::all();
+        $lenght = count($articles)/10;
+        $articles = $articles->take(10);
+        return view('admin.article', compact('articles', 'lenght'));
     }
 
     /**
@@ -39,7 +40,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if($request->ajax()){
+          $this->validate($request, [
+            'name' => 'required',
+            'body' => 'required',
+          ]);
+
+        // $artilce = createArticle($request);
+        return $request->all();
+        }
     }
 
     /**
@@ -73,23 +82,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-      if ($request->ajax())
-        {
-          $user = User::findOrFail($id);
-          $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-            'role' => 'required'
-          ]);
-
-          $user->name = $request->get('name');
-          $user->email = $request->get('email');
-          $user->rights = $request->get('role');
-          $user->save();
-
-          return $request->json(200, ["text" => "Uporabnik je bil posodbljen"]);
-        }
+        //
     }
 
     /**
@@ -98,20 +91,26 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy(Request $request, $id)
+    public function destroy($id)
     {
-      if ($request->ajax()){
-        $user = User::findOrFail($id);
-        $user->delete();
-        return $request->json(200, ["text" => "Uporabnik je bil izbrisan"]);
-      }
+        //
     }
 
-    public function filterUsers(Request $request)
+    public function createArticle($request)
     {
-      if ($request->ajax())
-      {
-          return User::search($request->input('param'), null, true)->get();
-      }
+      $article = new Article;
+      $article->name = $request->get('name');
+      $article->body = $request->get('body');
+      $article->image_dir = $request->get('name') . "_" . time();
+
+      $article->save();
+
+      return $article;
+    }
+    public function pagination($id)
+    {
+      $count = $id - 1;
+      $articles = Article::skip($count)->take(10)->get();
+      return $articles;
     }
 }

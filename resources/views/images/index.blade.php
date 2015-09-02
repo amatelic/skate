@@ -10,12 +10,15 @@
       </select>
     </div>
     <div class="col-md-6">
-      <h3>Dodaj slike</h3>
-      <form action="/images" class="dropzone" id="my-dropzone" method="POST">
+      <h3>Dodaj slike za dogodek:</h3>
+      <p id="articleName">Prosim najprej izberite ime dogodka nato dodajte slike</p>
+      <form action="/admin/images" class="dropzone" id="my-dropzone" method="POST">
         {{ csrf_field() }}
       </form>
     </div>
-    <div id="images" class="col-md-12">
+    <div  class="col-md-12">
+      <p><h2>Prikaži galerijo</h2> - ob kliku se slika izbriše</p>
+      <div id="images" class="col-md-12"></div>
     </div>
   </div>
 @endsection

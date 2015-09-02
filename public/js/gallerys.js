@@ -10946,15 +10946,24 @@ return jQuery;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _images = require('./images');
+var _imagesImages = require('./images/images');
 
-var _images2 = _interopRequireDefault(_images);
+var _imagesImages2 = _interopRequireDefault(_imagesImages);
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 (function (window) {
-  new _images2['default']('#articleSection');
+  _jquery2['default'].ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': (0, _jquery2['default'])('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  new _imagesImages2['default']('#articleSection');
 })(window);
 
-},{"./images":4}],4:[function(require,module,exports){
+},{"./images/images":4,"jquery":2}],4:[function(require,module,exports){
 /*jshint esnext: true */
 'use strict';
 
@@ -10984,8 +10993,9 @@ var Images = (function () {
     this.myDropzone = new _dropzone2['default']("#my-dropzone");
     _dropzone2['default'].autoDiscover = false;
     this.articleId = 1;
-    this.events();
     this.imageEl = (0, _jquery2['default'])("#images");
+    this.allImages = (0, _jquery2['default'])('img');
+    this.events();
   }
 
   _createClass(Images, [{
@@ -10993,14 +11003,23 @@ var Images = (function () {
     value: function events() {
       var _this = this;
 
+      this.imageEl.on('click', '.images-cover', (function (e) {
+        var el = (0, _jquery2['default'])(e.target);
+        var id = el.data('id');
+        var src = el.find('img').attr('src').match(/[^\/]+$/g);
+        this.http('/admin/images/' + id, { img: src[0] }, 'DELETE').then(function (data) {
+          el.fadeOut();
+        });
+      }).bind(this));
       this.el.on('click', function (e) {
         var id = _this.el.val();
-        _this.http('/images/' + id).then(function (_ref) {
+        _this.http('/admin/images/' + id).then(function (_ref) {
           var article = _ref.article;
           var images = _ref.images;
 
           _this.articleId = article.id;
-          _this.showImages(images);
+          _this.showImages(images, article.id);
+          _this.showOnArticle(article.title);
         });
       });
       this.myDropzone.on("sending", (function (file, xhr, formData) {
@@ -11008,13 +11027,18 @@ var Images = (function () {
       }).bind(this));
     }
   }, {
+    key: 'showOnArticle',
+    value: function showOnArticle(title) {
+      (0, _jquery2['default'])('#articleName').text(title);
+    }
+  }, {
     key: 'showImages',
-    value: function showImages(images) {
+    value: function showImages(images, id) {
       var _this2 = this;
 
       this.imageEl.empty();
       images.forEach(function (image) {
-        _this2.imageEl.append('\n        <div id="images" class="col-md-3">\n          <img src="' + image + '"">\n        </div>').slideDown(2000);
+        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-md-3">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
       });
     }
   }, {
@@ -11026,7 +11050,7 @@ var Images = (function () {
       return (0, _jquery.ajax)({
         method: method,
         url: url,
-        data: { param: param }
+        data: param
       });
     }
   }]);

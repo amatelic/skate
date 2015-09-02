@@ -21,4 +21,8 @@ class Article extends Model
   {
     return Storage::disk('public')->allFiles("/photos/" . $type);
   }
+  public function scopeDeleteImage($query, $path)
+  {
+    return Storage::disk('public')->delete($path);
+  }
 }

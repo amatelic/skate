@@ -5,7 +5,7 @@
   <title>Admin-pannel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{csrf_token()}}"/>
-  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="/css/app.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.0.1/dropzone.css">
 </head>
 <body>
@@ -25,7 +25,7 @@
             <li><a href="/admin">Domov</a></li>
             <li><a href="/admin/users">Uporabniki</a></li>
             <li><a href="/admin/images">Slike</a></li>
-            <li><a href="/admin/news">Novice</a></li>
+            <li><a href="/admin/articles">Zgodbe</a></li>
             <li><a href="/admin/learning">Veščine</a></li>
             <li><a href="#">Odjavi</a></li>
           </ul>
