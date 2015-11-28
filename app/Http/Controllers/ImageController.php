@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use Storage;
+use File;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -10,6 +11,11 @@ use App\Article;
 
 class ImageController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +23,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $articles = Article::all()->take(10);
+        $articles = Article::orderBy('id', 'DESC')->get()->take(10);
         return view('images.index', compact('articles'));
     }
 
@@ -43,7 +49,7 @@ class ImageController extends Controller
         $id = $request->input('article_id');
 
         $article  =  Article::where('id', $id)->first();
-        $name = time() . $file->getClientOriginalName();
+        $name = time() . str_replace(' ', '_', $file->getClientOriginalName());
 
         $file->move('photos/' . $article->image_dir, $name);
 
@@ -98,5 +104,26 @@ class ImageController extends Controller
       $img_file = $request->input('img');
       Article::DeleteImage('photos/' . $article->image_dir. '/' . $img_file);
       return 'Slika je bila zbrisana';
+    }
+
+    /**
+     * Display gallery by years
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function showGallerys($data = null)
+    {
+        $imagesByYear = [];
+        $year = (isset($data))?$data:date("Y");
+        $dirs = Storage::disk('public')->allDirectories('photos/' .$year);
+        foreach ($dirs as $key => $dir) {
+          $images = File::allFiles("./" . $dir);
+          foreach ($images as $key => $image) {
+            $imagesByYear[] = (string)$image;
+          }
+        }
+
+        return view('main.gallery', compact('imagesByYear', 'year'));
     }
 }

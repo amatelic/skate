@@ -20,6 +20,8 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $table = 'users';
 
+    // public $timestamps = false; //to disable the timestamp
+
     /**
      * The attributes that are mass assignable.
      *
@@ -41,4 +43,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
             'rights' => 2,
         ]
     ];
+
+    public function isAdmin()
+    {
+      if ($this->rights == 'ADMIN'){
+          return true;
+      }
+
+      return false;
+    }
 }

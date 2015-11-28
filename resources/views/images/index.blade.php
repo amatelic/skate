@@ -17,7 +17,8 @@
       </form>
     </div>
     <div  class="col-md-12">
-      <p><h2>Prikaži galerijo</h2> - ob kliku se slika izbriše</p>
+      <h2>Prikaži galerijo</h2>
+      <b>ob kliku se slika izbriše</b>
       <div id="images" class="col-md-12"></div>
     </div>
   </div>

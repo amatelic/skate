@@ -11,13 +11,16 @@
 |
 */
 
+//Go to tinker and write factory("App\User")->create();
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'rights' => "SKVO",
-        'password' => bcrypt(str_random(10)),
+        'name' => 'anze',
+        'email' => 'amatelic94@gmail.com',
+        'rights' => 'IV',
+        'password' => bcrypt('anma13'),
         'remember_token' => str_random(10),
+        'created_at' => $faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
+        'updated_at' => $faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
     ];
 });
 
@@ -27,5 +30,13 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'body' => $faker->text,
         'body' => $faker->text,
         'image_dir' => $faker->colorName
+    ];
+});
+
+$factory->define(App\Notification::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->sentence,
+        'body' => $faker->text,
+        'atttendenc' => '1,0,1,0,1,0',
     ];
 });

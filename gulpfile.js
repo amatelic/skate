@@ -13,9 +13,13 @@ require('laravel-elixir-livereload');
  */
 
 elixir(function(mix) {
-    mix.sass('app.sass')
-      .browserify('gallerys.js')
-      .browserify('users.js')
-      .browserify('article.js')
-      .livereload();
+  mix
+    // .browserify('gallerys.js')
+    // .browserify('users.js')
+    // .browserify('main/index.js')
+    .browserify('article.js')
+    .sass('app.sass')
+    .browserify('notification.js')
+    .browserify('steg.js')
+    .livereload();
 });

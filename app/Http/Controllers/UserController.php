@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Hash;
+use Validator;
+use Redirect;
 use App\User;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+      $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -39,7 +46,30 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $v = Validator::make($request->all(), [
+        'name' => 'required',
+        'password' => 'required',
+        'email' => 'required',
+        'rights' => 'required',
+      ]);
+
+      if ($v->fails())
+      {
+          return redirect()->back()->withErrors($v->errors());
+      }
+      if (User::where('email', $request->get('email'))->exists()) {
+        return redirect('admin/users')
+            ->withErrors(['same' => 'User already exsists.']);
+      }
+
+      User::create(array(
+        'name' => $request->get('name'),
+        'email' => $request->get('email'),
+        'password' => Hash::make($request->get('name')),
+        'rights' => $request->get('rights'),
+      ));
+
+      return Redirect::to('admin/users');
     }
 
     /**

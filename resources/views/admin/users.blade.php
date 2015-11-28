@@ -1,39 +1,51 @@
 @extends('adminMaster')
 
 @section('content')
+<div class="form-group">
+  @if(count($errors) > 0)
+    <div class="alert alert-danger">
+      <ul>
+        @foreach($errors->all() as $error)
+          <li>{{ $error}}</li>
+        @endforeach
+      </ul>
+    </div>
+  @endif
+</div>
 <h3>Dodaj uporabnika:</h3>
 <button type="button" name="button" class="show-add-fields btn btn-info">Prikazi</button>
 
-<form class="form-horizontal add-user">
+<form method="POST" action="/admin/users"class="form-horizontal add-user">
+  {!! csrf_field() !!}
   <div class="form-group">
     <label for="name" class="col-sm-1 control-label">Ime</label>
     <div class="col-sm-11">
-      <input type="text" class="form-control" id="name" placeholder="Prosim vpisite ime">
+      <input type="text" name="name" class="form-control" id="name" placeholder="Prosim vpisite ime">
     </div>
   </div>
   <div class="form-group">
-    <label for="username" class="col-sm-1 text-center control-label">Priimek</label>
+    <label for="username" class="col-sm-1 text-center control-label">Password</label>
     <div class="col-sm-11">
-      <input type="text" class="form-control" id="username" placeholder="Prosim vpisite primek">
+      <input type="password" name="password" class="form-control" id="username" placeholder="Prosim vpisite password">
     </div>
   </div>
   <div class="form-group">
-    <label for="email" class="col-sm-1 control-label">Email</label>
+    <label for="email" class="col-sm-1 control-label">Email:</label>
     <div class="col-sm-11">
-      <input type="text" class="form-control" id="email" placeholder="Prosim vpisite email">
+      <input type="text" name="email" class="form-control" id="email" placeholder="Prosim vpisite email">
     </div>
   </div>
   <div class="form-group">
     <label for="role" class="col-sm-1 control-label">Veja:</label>
     <div class="col-sm-11">
-      <select class="form-control">
+      <select name="rights" class="form-control">
           <option>IV</option>
           <option>PP</option>
           <option>SKVO</option>
         </select>
     </div>
   </div>
-  <button type="button" class="btn btn-success center-block" name="add">Dodaj</button>
+  <button type="submit" class="btn btn-success center-block">Dodaj</button>
 </form>
 <form class="form-horizontal">
   <h3>Filtriraj uporabnike:</h3>

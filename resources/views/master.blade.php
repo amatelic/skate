@@ -4,20 +4,13 @@
   <meta charset="UTF-8">
   <title>Skavti bovec1</title>
   <link rel="stylesheet" href="css/app.css">
+  <link href="lib/lightbox2/dist/css/lightbox.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    test, vaja
-  </header>
+  @include('includes.header')
   <main>
     <div id="left">
-        <div class="login">
-          <label for="email">Email:</label>
-          <input type="text" id="email">
-          <label for="password">Geslo:</label>
-          <input type="password" id="password">
-        </div>
-        <button id="loginUer">Show</button>
+        @yield('left')
     </div>
     <div id="center">
       @yield('center')
@@ -26,6 +19,8 @@
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur a, suscipit eum mollitia at illum ipsum asperiores earum vero quam quas eaque incidunt aliquam odit consequatur, libero beatae explicabo rerum.
     </div>
   </main>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
+  <script src="lib/lightbox2/dist/js/lightbox.min.js"></script>
   <div class="scripts">
        @yield('script')
   </div>

@@ -15,7 +15,7 @@ class Article extends Model
    *
    * @var array
    */
-  protected $fillable = ['name', 'body','image_dir'];
+  protected $fillable = ['title', 'body', 'image_dir'];
 
   public function scopegetImagesPath($query, $type)
   {

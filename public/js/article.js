@@ -9212,7 +9212,6 @@ return jQuery;
 
 },{}],2:[function(require,module,exports){
 /*jshint esnext: true */
-
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -9228,70 +9227,94 @@ var _jquery2 = _interopRequireDefault(_jquery);
     }
   });
 
-  var topics = {};
+  var tbody = (0, _jquery2['default'])('.artilceBody');
 
-  _jquery2['default'].Topic = function (id) {
-    var callbacks,
-        topic = id && topics[id];
-    if (!topic) {
-      callbacks = jQuery.Callbacks();
-      topic = {
-        publish: callbacks.fire,
-        subscribe: callbacks.add,
-        unsubscribe: callbacks.remove
-      };
-      if (id) {
-        topics[id] = topic;
-      }
-    }
-    return topic;
-  };
-
-  var form = (0, _jquery2['default'])('#articleForm');
-  var input = form.find('input');
-  var textarea = form.find('textarea');
-  var articleTable = (0, _jquery2['default'])('.artilceBody');
-  _jquery2['default'].Topic("add:new:user").subscribe(function (_ref) {
-    var name = _ref.name;
-    var body = _ref.body;
-
-    (0, _jquery2['default'])('#displayArticles').append('<h2>' + name + '<h2>');
-    (0, _jquery2['default'])('#displayArticles').append('<p>' + body + '<p>');
-  });
-
-  form.on('submit', function (e) {
+  (0, _jquery2['default'])('.delete-article').on('click', function (e) {
     e.preventDefault();
+    var id = (0, _jquery2['default'])(e.target);
     _jquery2['default'].ajax({
-      method: 'POST',
-      url: '/admin/articles',
-      data: {
-        name: input.val(),
-        body: textarea.val()
-      }
-
+      method: 'DELETE',
+      url: '/admin/articles/' + id.data('id')
     }).then(function (respond) {
-      _jquery2['default'].Topic("add:new:user").publish(respond);
-    });
-  });
+      tbody.empty();
+      respond.forEach(function (_ref) {
+        var title = _ref.title;
+        var body = _ref.body;
+        var id = _ref.id;
 
-  (0, _jquery2['default'])('.pagination').on('click', 'li', function (e) {
-    var target = (0, _jquery2['default'])(e.target);
-    console.log(target.html());
-    target.parent().addClass('active');
-    target.parent().siblings().removeClass('active');
-    _jquery2['default'].ajax({
-      method: 'get',
-      url: '/admin/articlePagination/' + target.html()
-    }).then(function (articles) {
-      articleTable.empty();
-      articles.forEach(function (_ref2) {
-        var title = _ref2.title;
-        var body = _ref2.body;
-
-        articleTable.append('<tr>\n          <td>' + title + '</td>\n          <td>\n            <button type="button" class="btn btn-primary">Spremeni</button>\n          </td>\n          <td>\n            <button type="button" class="btn btn-danger">Izbriši</button>\n          </td>\n          <tr>');
+        tbody.append('<tr>\n        <td>' + title + '</td>\n        <td><button type="button" data-id="' + id + '" class="btn btn-primary change-article">Spremeni</button></td>\n        <td><button type="button" data-id="' + id + '" class="btn btn-danger delete-article">Izbriši</button></td>\n      </tr>');
       });
     });
   });
+  //   var topics = {};
+  //
+  // $.Topic = function( id ) {
+  //     var callbacks,
+  //         topic = id && topics[ id ];
+  //     if ( !topic ) {
+  //         callbacks = jQuery.Callbacks();
+  //         topic = {
+  //             publish: callbacks.fire,
+  //             subscribe: callbacks.add,
+  //             unsubscribe: callbacks.remove
+  //         };
+  //         if ( id ) {
+  //             topics[ id ] = topic;
+  //         }
+  //     }
+  //     return topic;
+  // };
+  //
+  //   let form = $('#articleForm');
+  //   let input = form.find('input');
+  //   let textarea = form.find('textarea');
+  //   let articleTable = $('.artilceBody');
+  //   $.Topic("add:new:user").subscribe(function ({name, body}){
+  //     $('#displayArticles').append(`<h2>${name}<h2>`);
+  //     $('#displayArticles').append(`<p>${body}<p>`);
+  //   });
+  //
+  //
+  //   form.on('submit', function (e) {
+  //     e.preventDefault();
+  //     $.ajax({
+  //       method: 'POST',
+  //       url: '/admin/articles',
+  //       data: {
+  //         title: input.val(),
+  //         body: textarea.val()
+  //       }
+  //
+  //     }).then(function (respond) {
+  //       $.Topic("add:new:user").publish(respond);
+  //     });
+  //   });
+  //
+  //   $('.pagination').on('click', 'li', function(e) {
+  //     var target = $(e.target);
+  //     console.log(target.html());
+  //     target.parent().addClass('active');
+  //     target.parent().siblings().removeClass('active');
+  //     $.ajax({
+  //       method: 'get',
+  //       url: '/admin/articlePagination/' + target.html(),
+  //     }).then(function (articles) {
+  //       articleTable.empty();
+  //       articles.forEach(function ({title, body}) {
+  //         articleTable.append(`<tr>
+  //           <td>${title}</td>
+  //           <td>
+  //             <button type="button" class="btn btn-primary">Spremeni</button>
+  //           </td>
+  //           <td>
+  //             <button type="button" class="btn btn-danger">Izbriši</button>
+  //           </td>
+  //           <tr>`);
+  //       });
+  //     });
+  //   });
 })();
 
 },{"jquery":1}]},{},[2]);
+
+//# sourceMappingURL=article.js.map

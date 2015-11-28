@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Providers;
+use Blade;
+
 
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +15,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      Blade::directive('getimage', function ($image) {
+        dd($image);
+        return "<?php echo $image ?>";
+      });
     }
 
     /**

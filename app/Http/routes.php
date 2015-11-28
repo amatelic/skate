@@ -1,6 +1,6 @@
 <?php
-use App\Article;
-use App\User;
+use App\Notification;
+use Storage;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -12,11 +12,23 @@ use App\User;
 |
 */
 
-Route::get('/', function () {
-
-    $articles = Article::all()->take(10);
-    return view('index', compact('articles'));
+Route::resource('/', 'NotificationController@showNotification');
+Route::resource('/articles', 'ArticleController@showArticle');
+Route::get('/steg', function(){
+  return view('main.steg');
 });
+
+Route::get('/gallery', 'ImageController@showGallerys');
+// Route::get('/gallery', function () {
+//     $dirs = Storage::disk('public')->allDirectories('photos');
+//
+//   foreach ($dirs as $dir ) {
+//     var_dump(public_path() . "/" . $dir);
+//
+//     var_dump(Store::getDirectory(public_path() . "/" . $dir));
+//   }
+//     return dd("test");
+// });
 
 // Route::get('article/{id}', function ($id)
 // {
@@ -24,12 +36,18 @@ Route::get('/', function () {
 //   return $article;
 // });
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');
     Route::get('/users/filter', 'UserController@filterUsers');
     Route::resource('/users', 'UserController');
     Route::resource('/images', 'ImageController');
+    Route::resource('/notifications', 'NotificationController');
     Route::get('/articlePagination/{id}', 'ArticleController@pagination');
     Route::resource('/articles', 'ArticleController');
 
 });
+
+// Authentication routes...
+Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
