@@ -2,6 +2,13 @@
 @section('left')
   <h4>Prijava:</h4>
   @include('includes.login')
+  <hr>
+  <h4>Po letih:</h4>
+  <ul>
+  @for($i = $maxYear; $i >= $minYear; $i--)
+    <li><a href="/articles/{{$i}}">{{$i}}</a></li>
+  @endfor
+  </ul>
 @endsection
 @section('center')
   @for($i=0; $i < count($articles) ; $i++)
@@ -9,6 +16,6 @@
   @endfor
 @endsection
 @section('script')
-  <script src="js/index.js" type="text/javascript">
+  <script src="{{URL::asset('js/index.js')}}" type="text/javascript">
   </script>
 @endsection

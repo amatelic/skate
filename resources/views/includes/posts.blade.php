@@ -8,7 +8,7 @@
       @foreach($imagesDir as  $image)
         {{-- <img src="{{$image}}" width="100px" height="100px" alt="" /> --}}
         <a href="{{$image}}" data-lightbox="image-1" data-title="skavt-post">
-          <img class="skavt-post-image" src="{{$image}}">
+          <img class="skavt-post-image skavt-post-image-animation" src="{{$image}}">
         </a>
       @endforeach
     </div>

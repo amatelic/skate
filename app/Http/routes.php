@@ -1,6 +1,5 @@
 <?php
 use App\Notification;
-use Storage;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -13,28 +12,15 @@ use Storage;
 */
 
 Route::resource('/', 'NotificationController@showNotification');
-Route::resource('/articles', 'ArticleController@showArticle');
+Route::get('/articles', 'ArticleController@showArticle');
+Route::get('/articles/{year}', 'ArticleController@showArticleByYear')->where('year', '[0-9]+');
 Route::get('/steg', function(){
   return view('main.steg');
 });
 
 Route::get('/gallery', 'ImageController@showGallerys');
-// Route::get('/gallery', function () {
-//     $dirs = Storage::disk('public')->allDirectories('photos');
-//
-//   foreach ($dirs as $dir ) {
-//     var_dump(public_path() . "/" . $dir);
-//
-//     var_dump(Store::getDirectory(public_path() . "/" . $dir));
-//   }
-//     return dd("test");
-// });
+Route::get('/getImages/{id}', 'ImageController@selectGalleryByYears')->where('id', '[0-9]+');
 
-// Route::get('article/{id}', function ($id)
-// {
-//   $article = Article::where("id", $id)->get();
-//   return $article;
-// });
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::resource('/', 'AdminController');

@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Skavti bovec1</title>
-  <link rel="stylesheet" href="css/app.css">
-  <link href="lib/lightbox2/dist/css/lightbox.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{URL::asset('css/app.css')}}">
+
+  <link href="{{URL::asset('lib/lightbox2/dist/css/lightbox.css')}}" rel="stylesheet">
 </head>
 <body>
   @include('includes.header')
@@ -20,7 +21,7 @@
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
-  <script src="lib/lightbox2/dist/js/lightbox.min.js"></script>
+  <script src="{{URL::asset('lib/lightbox2/dist/js/lightbox.min.js')}}"></script>
   <div class="scripts">
        @yield('script')
   </div>

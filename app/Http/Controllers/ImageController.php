@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 use Storage;
 use File;
 use Illuminate\Http\Request;
-
+use Log;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Article;
 
 class ImageController extends Controller
 {
-    public function __construct()
-    {
-      $this->middleware('auth');
-    }
 
     /**
      * Display a listing of the resource.
@@ -114,16 +110,31 @@ class ImageController extends Controller
      */
     public function showGallerys($data = null)
     {
-        $imagesByYear = [];
-        $year = (isset($data))?$data:date("Y");
-        $dirs = Storage::disk('public')->allDirectories('photos/' .$year);
-        foreach ($dirs as $key => $dir) {
-          $images = File::allFiles("./" . $dir);
-          foreach ($images as $key => $image) {
-            $imagesByYear[] = (string)$image;
-          }
-        }
 
+        $year = date("Y");
+        $imagesByYear = $this->selectGalleryByYears($year);
+        $imagesByYear = $imagesByYear['collection'];
         return view('main.gallery', compact('imagesByYear', 'year'));
+    }
+
+
+    public function selectGalleryByYears($year)
+    {
+      $imagesByYear = [];
+      $foleders= Storage::disk('public')->allDirectories('photos');
+      $dirs = Storage::disk('public')->allDirectories('photos/' .$year);
+      foreach ($dirs as $key => $dir) {
+        $images = File::allFiles("./" . $dir);
+        foreach ($images as $key => $image) {
+          $imagesByYear[] = (string)$image;
+        }
+      }
+      if (count($imagesByYear) != 0) {
+        return ['collection' => $imagesByYear, 'year' => $year];
+      }else if (count($imagesByYear) == 0  && in_array("./photos/" . $year, File::directories('./photos/'))) {
+        return ["repeat" => true];
+      }else{
+        return ["repeat" => false];
+      }
     }
 }

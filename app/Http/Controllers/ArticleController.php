@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Validator;
 use File;
+use Carbon\Carbon;
 use Redirect;
 use Illuminate\Http\Request;
 use App\Article;
@@ -141,11 +142,37 @@ class ArticleController extends Controller
     }
     public function showArticle($value='')
     {
-      $articles = Article::all();
+
+      $maxYear = (int)substr(Article::max('created_at'), 0, 4);
+      $minYear = (int)substr(Article::min('created_at'), 0, 4);
+      $between = $this->getYearsBetween(date("Y"));
+      $articles = Article::whereBetween('created_at', $between)->take(10)->get();
       $lenght = count($articles)/10;
-      $articles = $articles->take(10);
       $imageDir = $this->parseData($articles);
 
-      return view('article', compact('articles', 'lenght', 'imageDir'));
+      return view('article', compact('articles', 'lenght', 'imageDir', 'maxYear', 'minYear'));
+    }
+
+    public function showArticleByYear($year)
+    {
+      $maxYear = (int)substr(Article::max('created_at'), 0, 4);
+      $minYear = (int)substr(Article::min('created_at'), 0, 4);
+      $between = $this->getYearsBetween($year);
+      $articles = Article::whereBetween('created_at', $between)->take(10)->get();
+      $lenght = count($articles)/10;
+      $imageDir = $this->parseData($articles);
+      return view('article', compact('articles', 'lenght', 'imageDir', 'maxYear', 'minYear'));
+    }
+
+    public function getYearsBetween($year){
+      $from = Carbon::createFromFormat('d-m-Y h:i', '01-01-' . $year . ' 00:00')
+          ->startOfDay()
+          ->toDateTimeString();
+
+      $to = Carbon::createFromFormat('d-m-Y h:i', '30-12-' . $year . ' 00:00')
+          ->endOfDay()
+          ->toDateTimeString();
+
+      return ['from' => $from, 'to' => $to];
     }
 }

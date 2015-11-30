@@ -17,9 +17,10 @@ elixir(function(mix) {
     // .browserify('gallerys.js')
     // .browserify('users.js')
     // .browserify('main/index.js')
-    .browserify('article.js')
+    // .browserify('article.js')
     .sass('app.sass')
     .browserify('notification.js')
-    .browserify('steg.js')
+    .browserify('images.js')
+    // .browserify('steg.js')
     .livereload();
 });
