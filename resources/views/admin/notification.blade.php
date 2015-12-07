@@ -25,6 +25,10 @@
           <label for="textContent">Vsebina:</label>
           <textarea name="body" id="textContent" class="form-control" rows="3"></textarea>
         </div>
+        <div class="form-group">
+          <label for="dateOfStory">Kdaj:</label>
+          <input type="date" name="will_be" class="form-control" id="dateOfStory" placeholder="dd/mmm/yyyy">
+        </div>
         <button type="submit" class="btn btn-primary">Objavi</button>
       </form>
     </div>

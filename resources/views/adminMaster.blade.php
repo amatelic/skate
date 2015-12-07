@@ -29,7 +29,7 @@
               <li><a href="/admin/images">Slike</a></li>
               @if(Auth::user()->isAdmin())
                 <li><a href="/admin/users">Uporabniki</a></li>
-                <li><a href="/admin/learning">Veščine</a></li>
+                {{-- <li><a href="/admin/learning">Veščine</a></li> --}}
               @endif
               <li><a href="auth/logout">Odjavi</a></li>
             @endif

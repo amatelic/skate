@@ -59,23 +59,25 @@ main
   display: flex
   flex-direction: column
   justify-content: center
-  flex: 2 1 700px
+  flex: 2 1 400px
   height: 100%
   padding: 10px 20px
   @media only screen and (min-width : 1000px)
-    width: 1000px
+    width: 800px
 
 #left,#right
   background: $orange
-  flex: 1 1 200px
+  max-width:  180px
+  height: auto
+  flex: 1 1 180px
 
 #right
   @media #{$MobileAndTablet}
     display:none
 
 #left
-  display: flex
-  flex-direction: column
+  // display: flex
+  // flex-direction: column
   // justify-content: center
   // @media #{$MobileAndTablet}
     justify-content: flex-start

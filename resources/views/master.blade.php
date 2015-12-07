@@ -22,6 +22,7 @@
   </main>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>
   <script src="{{URL::asset('lib/lightbox2/dist/js/lightbox.min.js')}}"></script>
+  <script src="{{URL::asset('js/calender.js')}}"></script>
   <div class="scripts">
        @yield('script')
   </div>

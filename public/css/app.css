@@ -8556,6 +8556,52 @@ li.steg_nav_li {
   margin-top: 10px;
 }
 
+table.skavti-calender {
+  border: 1px solid black;
+  width: 170px;
+  display: block;
+  margin-left: 5px;
+  display: block;
+}
+
+table.skavti-calender td {
+  width: 20px;
+  text-align: center;
+  padding: 3px;
+}
+
+.skavt-circle {
+  border: 2px solid #a1a1a1;
+  background: #40878C;
+}
+
+.modal-skavti {
+  position: fixed;
+  z-index: 10px;
+  width: 50%;
+  padding: 5px;
+  height: auto;
+  top: 30%;
+  left: 25%;
+  padding: 10px;
+  background: #B0720E;
+  text-align: center;
+  border: 5px solid black;
+}
+
+.modal-skavti h1,
+.modal-skavti p {
+  text-align: center;
+}
+
+.black-box {
+  top: 0;
+  left: 0;
+  opacity: 0.3;
+  background: black;
+  position: fixed;
+}
+
 header {
   background: url("../images/glava_01.jpg") no-repeat;
   background-size: cover;
@@ -8643,34 +8689,27 @@ main {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  -webkit-flex: 2 1 700px;
-  -ms-flex: 2 1 700px;
-  flex: 2 1 700px;
+  -webkit-flex: 2 1 400px;
+  -ms-flex: 2 1 400px;
+  flex: 2 1 400px;
   height: 100%;
   padding: 10px 20px;
 }
 
 @media only screen and (min-width: 1000px) {
   #center {
-    width: 1000px;
+    width: 800px;
   }
 }
 
 #left,
 #right {
   background: #B0720E;
-  -webkit-flex: 1 1 200px;
-  -ms-flex: 1 1 200px;
-  flex: 1 1 200px;
-}
-
-#left {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  max-width: 180px;
+  height: auto;
+  -webkit-flex: 1 1 180px;
+  -ms-flex: 1 1 180px;
+  flex: 1 1 180px;
 }
 
 .container {

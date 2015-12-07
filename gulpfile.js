@@ -21,6 +21,7 @@ elixir(function(mix) {
     .sass('app.sass')
     .browserify('notification.js')
     .browserify('images.js')
-    // .browserify('steg.js')
+    .browserify('images.js')
+    .browserify('calender.js')
     .livereload();
 });

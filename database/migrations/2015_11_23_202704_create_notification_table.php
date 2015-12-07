@@ -16,6 +16,7 @@ class CreateNotificationTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('body');
+            $table->dateTime('will_be');
             $table->text('attendance')->nullable();
             $table->timestamps();
         });

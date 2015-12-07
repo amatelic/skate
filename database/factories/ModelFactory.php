@@ -14,10 +14,10 @@
 //Go to tinker and write factory("App\User")->create();
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => 'anze',
-        'email' => 'amatelic94@gmail.com',
-        'rights' => 'IV',
-        'password' => bcrypt('anma13'),
+        'name' => 'eva',
+        'email' => 'eva.pejic@gmail.com',
+        'rights' => 'SKVO',
+        'password' => bcrypt('eva'),
         'remember_token' => str_random(10),
         'created_at' => $faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),
         'updated_at' => $faker->dateTimeThisMonth()->format('Y-m-d H:i:s'),

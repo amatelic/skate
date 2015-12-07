@@ -12,6 +12,7 @@ use App\Notification;
 */
 
 Route::resource('/', 'NotificationController@showNotification');
+Route::get('/notification', 'NotificationController@calenderNotification');
 Route::get('/articles', 'ArticleController@showArticle');
 Route::get('/articles/{year}', 'ArticleController@showArticleByYear')->where('year', '[0-9]+');
 Route::get('/steg', function(){
