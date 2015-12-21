@@ -32,16 +32,15 @@
       <div class="col-md-6" >
         <div id="displayArticles" class="col-md-12">
           <h2>Zgodovina novic:</h2>
+          <p class="bg-warning">
+            Spreminjanje uporabnika se ne dela
+          </p>
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td>Novica</td><td>Spremeni</td><td>Izbriši</td>
               </tr>
             </thead>
-
-            <p class="bg-warning">
-              Spreminanje novic je se v izdelavi zato se ne dela
-            </p>
             <tbody class="artilceBody">
               @foreach($articles as $article)
                 <tr>

@@ -20,10 +20,10 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $allDirectoryiesByYear = Storage::disk('public')->directories('photos');
-        $years = $this->substractArray($allDirectoryiesByYear, -4);
-        $articles = $this->getByYear(date('Y'));
-        return view('images.index', compact('articles', 'years'));
+      $allDirectoryiesByYear = Storage::disk('public')->directories('photos');
+      $years = $this->substractArray($allDirectoryiesByYear, -4);
+      $articles = $this->getByYear(date('Y'));
+      return view('images.index', compact('articles', 'years'));
     }
     public function getByYear($year)
     {
@@ -39,13 +39,14 @@ class ImageController extends Controller
     public function substractArray($collection, $position)
     {
       $years = [];
-
       foreach ($collection as $value) {
         $years[] = substr($value, $position);
       }
 
-      return $years;
-    }
+     return $years;
+       $articles = Article::orderBy('id', 'DESC')->get()->take(10);
+       return view('images.index', compact('articles'));
+     }
 
     /**
      * Show the form for creating a new resource.

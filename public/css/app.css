@@ -8370,7 +8370,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: #1A2040;
 }
 
 input {
@@ -8493,17 +8492,18 @@ li.steg_nav_li {
   margin: 0 auto;
 }
 
+li.steg_nav_li:last-child {
+  border-bottom: 2px solid #40878C;
+}
+
 .steg-main {
   width: 100%;
   min-height: 500px;
   text-align: center;
-  margin-top: 60px;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  margin: 60px auto;
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1000px) {
   .steg-main {
     width: 80%;
   }
@@ -8619,13 +8619,13 @@ table.skavti-calender td {
 
 header {
   background: url("../images/glava_01.jpg") no-repeat;
+  background-size: cover;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  background-size: cover;
   margin: 0 auto;
   max-width: 1200px;
-  height: 300px;
+  height: 270px;
   -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
@@ -8699,6 +8699,7 @@ main {
 }
 
 #center {
+  width: 100%;
   background: #B0720E;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -8713,14 +8714,7 @@ main {
   -ms-flex: 2 1 400px;
   flex: 2 1 400px;
   height: 100%;
-  width: 100%;
   padding: 10px 20px;
-}
-
-@media only screen and (min-width: 1000px) {
-  #center {
-    width: 800px;
-  }
 }
 
 #left,

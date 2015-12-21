@@ -25,6 +25,10 @@ article.skavt-post
   padding: 10px
   margin-bottom: 20px
   border: 5px solid #000
+  // -webkit-transition:  all 5s
+  // transition:  all 5s
+  // .text
+  //   display: none
 .skavt-post-gallery
   +size()
   display: none
@@ -50,14 +54,14 @@ li.steg_nav_li
   border-bottom-width: 0px
   width: 80%
   margin: 0 auto
-
+li.steg_nav_li:last-child
+  border-bottom: 2px solid $green_1
 .steg-main
   width: 100%
   min-height: 500px
   text-align: center
-  margin-top: 60px
-  justify-content: center
-  @media #{$PC-1200-min}
+  margin: 60px auto
+  @media #{$PC-1000-min}
     width: 80%
 
 

@@ -11014,7 +11014,6 @@ var _jquery2 = _interopRequireDefault(_jquery);
       var collection = _ref.collection;
       var repeat = _ref.repeat;
 
-      console.log(year, collection, repeat);
       if (repeat) {
         currentYear -= 1;
         ajaxCall();
@@ -11076,9 +11075,7 @@ var Images = (function () {
       this.imageEl.on('click', '.images-cover', (function (e) {
         var el = (0, _jquery2['default'])(e.target);
         var id = el.data('id');
-        //regular expresion for getting the name of image
         var src = el.find('img').attr('src').match(/[^\/]+$/g);
-        //deleting image
         this.http('/admin/images/' + id, { img: src[0] }, 'DELETE').then(function (data) {
           el.fadeOut();
         });
@@ -11110,7 +11107,7 @@ var Images = (function () {
 
       this.imageEl.empty();
       images.forEach(function (image) {
-        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-sm-4">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
+        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-md-3">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
       });
     }
   }, {

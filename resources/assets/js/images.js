@@ -37,7 +37,6 @@ import $ from 'jquery';
       method: 'GET',
       url: '/getImages/' + currentYear,
     }).then(function({year, collection, repeat}) {
-      console.log(year, collection, repeat);
       if (repeat) {
         currentYear -= 1;
         ajaxCall();

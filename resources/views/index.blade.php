@@ -1,6 +1,6 @@
 @extends('master')
 @section('left')
-  @include('includes.calender')
+    @include('includes.calender')
 @endsection
 @section('center')
   @foreach($notifications as $notification)

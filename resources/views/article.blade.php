@@ -6,7 +6,7 @@
     <li><a href="/articles/{{$i}}">{{$i}}</a></li>
   @endfor
   </ul>
-  @include('includes.calender')
+    @include('includes.calender')
 @endsection
 @section('center')
   @for($i=0; $i < count($articles) ; $i++)

@@ -17,9 +17,7 @@ export default class Images{
     this.imageEl.on('click', '.images-cover', function (e) {
       var el = $(e.target);
       var id = el.data('id');
-      //regular expresion for getting the name of image
       var src = el.find('img').attr('src').match(/[^\/]+$/g);
-      //deleting image
       this.http(`/admin/images/${id}`, {img: src[0]}, 'DELETE').then(function (data) {
         el.fadeOut();
       });
@@ -43,7 +41,7 @@ export default class Images{
     this.imageEl.empty();
     images.forEach((image) => {
       this.imageEl.append(`
-        <div id="images" data-id="${id}" class="images-cover  col-sm-4">
+        <div id="images" data-id="${id}" class="images-cover  col-md-3">
           <img src="../${image}"">
         </div>`).slideDown(2000);
     });

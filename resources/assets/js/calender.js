@@ -80,13 +80,14 @@ var calender = (function() {
   return {
     init: function(modal) {
       var days = dates(year, month);
-      $.get('http://skavti.dev/notification', { year, month }, (res) => {
-        content = res; //saving connter on res
+      $.get('/notification', { year, month }, (res) => {
+        content = res;
         createCalender(days, res.dates);
         dialog = modal;
         dialog.init();
         addEvents();
       }).fail(function() {
+
         createCalender(days, []); //on errors display empty
       });
     },

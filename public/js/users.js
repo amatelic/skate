@@ -9405,3 +9405,5 @@ exports['default'] = Modal;
 module.exports = exports['default'];
 
 },{"jquery":1}]},{},[2]);
+
+//# sourceMappingURL=users.js.map
