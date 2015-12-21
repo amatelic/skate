@@ -38,6 +38,10 @@
                 <td>Novica</td><td>Spremeni</td><td>Izbriši</td>
               </tr>
             </thead>
+
+            <p class="bg-warning">
+              Spreminanje novic je se v izdelavi zato se ne dela
+            </p>
             <tbody class="artilceBody">
               @foreach($articles as $article)
                 <tr>
@@ -45,7 +49,7 @@
                     {{$article->title}}
                   </td>
                   <td>
-                    <button type="button" data-id="{{$article->id}}" class="btn btn-primary change-article">Spremeni</button>
+                    <button disabled type="button" data-id="{{$article->id}}" class="btn btn-primary change-article">Spremeni</button>
                   </td>
                   <td>
                     <button type="button" data-id="{{$article->id}}" class="btn btn-danger delete-article">Izbriši</button>

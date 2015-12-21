@@ -1,8 +1,7 @@
 @extends('master')
 @section('left')
   @include('includes.steg_nav')
-   <h4>Prijava:</h4>
-  @include('includes.login')
+  @include('includes.calender')
 @endsection
 @section('center')
   <div class="steg-main">

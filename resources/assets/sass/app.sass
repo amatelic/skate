@@ -4,14 +4,16 @@
 @import "basic/media"
 @import "basic/base"
 @import "basic/components"
+@import "basic/table"
+
 
 header
   background: url('../images/glava_01.jpg') no-repeat
-  background-size: cover
   display: flex
+  background-size: cover
   margin: 0 auto
   max-width: 1200px
-  height: 380px
+  height: 300px
   align-items: flex-end
 
 .ul-header
@@ -29,6 +31,7 @@ header
   background: $gray
   border: 2px solid $green_1
   border-width: 3px 2px 3px 2px
+  +skavtBox-hover()
   a
     +style-text($green_2, 14px, bold, center)
     +size()
@@ -61,6 +64,7 @@ main
   justify-content: center
   flex: 2 1 400px
   height: 100%
+  width : 100%
   padding: 10px 20px
   @media only screen and (min-width : 1000px)
     width: 800px

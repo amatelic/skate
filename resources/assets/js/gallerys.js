@@ -8,7 +8,7 @@ import $ from 'jquery';
       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
     },
   });
-  $('#chooseYear').on('change', e => {
+  $('#chooseYear').on('change', e => {   //Change article by year
     var year = e.target.value;
     $.ajax({
       method: 'GET',

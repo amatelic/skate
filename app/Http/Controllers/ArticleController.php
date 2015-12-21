@@ -146,7 +146,7 @@ class ArticleController extends Controller
       $maxYear = (int)substr(Article::max('created_at'), 0, 4);
       $minYear = (int)substr(Article::min('created_at'), 0, 4);
       $between = $this->getYearsBetween(date("Y"));
-      $articles = Article::whereBetween('created_at', $between)->take(10)->get();
+      $articles = Article::whereBetween('created_at', $between)->orderBy('id', 'DESC')->get();
       $lenght = count($articles)/10;
       $imageDir = $this->parseData($articles);
 
@@ -158,7 +158,7 @@ class ArticleController extends Controller
       $maxYear = (int)substr(Article::max('created_at'), 0, 4);
       $minYear = (int)substr(Article::min('created_at'), 0, 4);
       $between = $this->getYearsBetween($year);
-      $articles = Article::whereBetween('created_at', $between)->take(10)->get();
+      $articles = Article::whereBetween('created_at', $between)->orderBy('id', 'DESC')->get();
       $lenght = count($articles)/10;
       $imageDir = $this->parseData($articles);
       return view('article', compact('articles', 'lenght', 'imageDir', 'maxYear', 'minYear'));

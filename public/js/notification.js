@@ -9225,15 +9225,26 @@ var _jquery2 = _interopRequireDefault(_jquery);
       'X-CSRF-TOKEN': (0, _jquery2['default'])('meta[name="csrf-token"]').attr('content')
     }
   });
+  //cheking witch browser we are on
+  var text = 'Uporabljate brskalnik ki ne podpira datum elementa prosim uporabljajte chrome ali pa zapišitei datum v tem formatu 13/04/20015 ';
+  var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+  var isChrome = !!window.chrome && !isOpera;
 
-  (0, _jquery2['default'])('.delete-article').on('click', function (e) {
+  if (!isChrome) {
+    (0, _jquery2['default'])('#dateOfStory').after('</br><p class="bg-warning">' + text + '</p>');
+  }
+
+  var button = (0, _jquery2['default'])('.delete-button');
+
+  button.on('click', function (e) {
     var target = (0, _jquery2['default'])(e.target);
     _jquery2['default'].ajax({
       method: 'DELETE',
       url: '/admin/notifications/' + target.data('id')
     }).then(function (respond) {
-      alert('bla');
-      console.log(respond);
+      target.closest('tr').remove();
+    }, function () {
+      alert('Žal uporabnika ni bilo mogoče zbrisati probi znova');
     });
   });
 })();

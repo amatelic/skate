@@ -10985,6 +10985,7 @@ var _jquery2 = _interopRequireDefault(_jquery);
     }
   });
   (0, _jquery2['default'])('#chooseYear').on('change', function (e) {
+    //Change article by year
     var year = e.target.value;
     _jquery2['default'].ajax({
       method: 'GET',

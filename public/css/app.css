@@ -8370,6 +8370,7 @@ html,
 body {
   margin: 0;
   padding: 0;
+  background: #1A2040;
 }
 
 input {
@@ -8384,6 +8385,11 @@ button {
   background: #BBB7B7;
   border: 2px solid #40878C;
   border-width: 3px 2px 3px 2px;
+}
+
+button:hover {
+  background: #40878C;
+  border-color: #BBB7B7;
 }
 
 a {
@@ -8492,6 +8498,15 @@ li.steg_nav_li {
   min-height: 500px;
   text-align: center;
   margin-top: 60px;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+@media only screen and (min-width: 1200px) {
+  .steg-main {
+    width: 80%;
+  }
 }
 
 .skavt-info {
@@ -8604,13 +8619,13 @@ table.skavti-calender td {
 
 header {
   background: url("../images/glava_01.jpg") no-repeat;
-  background-size: cover;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background-size: cover;
   margin: 0 auto;
   max-width: 1200px;
-  height: 380px;
+  height: 300px;
   -webkit-align-items: flex-end;
   -ms-flex-align: end;
   align-items: flex-end;
@@ -8638,6 +8653,11 @@ header {
   background: #BBB7B7;
   border: 2px solid #40878C;
   border-width: 3px 2px 3px 2px;
+}
+
+.li-header:hover {
+  background: #40878C;
+  border-color: #BBB7B7;
 }
 
 .li-header a {
@@ -8693,6 +8713,7 @@ main {
   -ms-flex: 2 1 400px;
   flex: 2 1 400px;
   height: 100%;
+  width: 100%;
   padding: 10px 20px;
 }
 
