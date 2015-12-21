@@ -10984,6 +10984,22 @@ var _jquery2 = _interopRequireDefault(_jquery);
       'X-CSRF-TOKEN': (0, _jquery2['default'])('meta[name="csrf-token"]').attr('content')
     }
   });
+  (0, _jquery2['default'])('#chooseYear').on('change', function (e) {
+    var year = e.target.value;
+    _jquery2['default'].ajax({
+      method: 'GET',
+      url: 'images/year/' + year,
+      success: function success(res) {
+        var articles = (0, _jquery2['default'])('#articleSection');
+        articles.empty();
+        res.forEach(function (article) {
+          articles.append('<option value=' + article.id + '>' + article.title + '</option>');
+        });
+      }
+    });
+  });
+
+  //class for creating, deleting and showing images
   new _imagesImages2['default']('#articleSection');
 })(window);
 
@@ -11030,7 +11046,9 @@ var Images = (function () {
       this.imageEl.on('click', '.images-cover', (function (e) {
         var el = (0, _jquery2['default'])(e.target);
         var id = el.data('id');
+        //regular expresion for getting the name of image
         var src = el.find('img').attr('src').match(/[^\/]+$/g);
+        //deleting image
         this.http('/admin/images/' + id, { img: src[0] }, 'DELETE').then(function (data) {
           el.fadeOut();
         });
@@ -11062,7 +11080,7 @@ var Images = (function () {
 
       this.imageEl.empty();
       images.forEach(function (image) {
-        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-md-3">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
+        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-sm-4">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
       });
     }
   }, {
@@ -11086,3 +11104,5 @@ exports['default'] = Images;
 module.exports = exports['default'];
 
 },{"dropzone":1,"jquery":2}]},{},[3]);
+
+//# sourceMappingURL=gallerys.js.map

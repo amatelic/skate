@@ -1,15 +1,24 @@
 @extends('adminMaster')
 @section('content')
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-4">
+      <h2>Izberite leto</h2>
+      <select id="chooseYear"  multiple class="form-control">
+        @for($i=(count($years) -1 ); $i >= 0 ; $i--)
+          <option value="{{$years[$i]}}">{{$years[$i]}}</option>
+        @endfor
+        {{-- @foreach ($years as $year)
+          <option value="{{$year}}">{{$year}}</option>
+        @endforeach --}}
+      </select>
       <h2>Izberite dogodek</h2>
       <select id="articleSection"  multiple class="form-control">
         @foreach ($articles as $article)
-        <option value="{{$article->id}}">{{$article->title}}</option>
+          <option value="{{$article->id}}">{{$article->title}}</option>
         @endforeach
       </select>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
       <h3>Dodaj slike za dogodek:</h3>
       <p id="articleName">Prosim najprej izberite ime dogodka nato dodajte slike</p>
       <form action="/admin/images" class="dropzone" id="my-dropzone" method="POST">

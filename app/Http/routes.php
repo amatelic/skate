@@ -28,6 +28,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::get('/users/filter', 'UserController@filterUsers');
     Route::resource('/users', 'UserController');
     Route::resource('/images', 'ImageController');
+    Route::get('/images/year/{year}', 'ImageController@dataByYear');
     Route::resource('/notifications', 'NotificationController');
     Route::get('/articlePagination/{id}', 'ArticleController@pagination');
     Route::resource('/articles', 'ArticleController');
@@ -37,4 +38,4 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('admin/auth/logout', 'Auth\AuthController@getLogout');

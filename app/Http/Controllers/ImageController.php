@@ -8,6 +8,7 @@ use Log;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Article;
+use Carbon\Carbon;
 
 class ImageController extends Controller
 {
@@ -19,8 +20,31 @@ class ImageController extends Controller
      */
     public function index()
     {
-        $articles = Article::orderBy('id', 'DESC')->get()->take(10);
-        return view('images.index', compact('articles'));
+        $allDirectoryiesByYear = Storage::disk('public')->directories('photos');
+        $years = $this->substractArray($allDirectoryiesByYear, -4);
+        $articles = $this->getByYear(date('Y'));
+        return view('images.index', compact('articles', 'years'));
+    }
+    public function getByYear($year)
+    {
+      return Article::orderBy('id', 'DESC')->whereYear('created_at', '=', $year)->get();
+    }
+
+    public function dataByYear($year)
+    {
+      $data = $this->getByYear($year)->toArray();
+      return $data;
+    }
+
+    public function substractArray($collection, $position)
+    {
+      $years = [];
+
+      foreach ($collection as $value) {
+        $years[] = substr($value, $position);
+      }
+
+      return $years;
     }
 
     /**

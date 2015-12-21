@@ -80,7 +80,7 @@ main
   // flex-direction: column
   // justify-content: center
   // @media #{$MobileAndTablet}
-    justify-content: flex-start
+  //  justify-content: flex-start
 
 
 .container
@@ -102,7 +102,7 @@ main
   background: red
 
 .images-cover
-  height: 222px
+  min-height: 222px
   -webkit-box-shadow: 6px 6px 23px -6px rgba(0,0,0,0.75)
   margin: 10px
   padding-bottom: 50px
@@ -113,8 +113,8 @@ main
     opacity: 0.5
     &:before
       left: 30%
-      top: 10%
-      width: 100%
+      top: 20%
+      +size(auto, auto)
       display: block
       position: absolute
       content: url("https://cdn1.iconfinder.com/data/icons/toolbar-signs/512/trash-128.png")

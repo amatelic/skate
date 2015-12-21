@@ -14,7 +14,7 @@ require('laravel-elixir-livereload');
 
 elixir(function(mix) {
   mix
-    // .browserify('gallerys.js')
+    .browserify('gallerys.js')
     // .browserify('users.js')
     // .browserify('main/index.js')
     // .browserify('article.js')
