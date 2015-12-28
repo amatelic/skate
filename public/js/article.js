@@ -9220,6 +9220,10 @@ var _jquery = require('jquery');
 
 var _jquery2 = _interopRequireDefault(_jquery);
 
+var _articleArticleModal = require('./article/articleModal');
+
+var _articleArticleModal2 = _interopRequireDefault(_articleArticleModal);
+
 (function () {
   _jquery2['default'].ajaxSetup({
     headers: {
@@ -9228,92 +9232,160 @@ var _jquery2 = _interopRequireDefault(_jquery);
   });
 
   var tbody = (0, _jquery2['default'])('.artilceBody');
-
-  (0, _jquery2['default'])('.delete-article').on('click', function (e) {
-    e.preventDefault();
-    var id = (0, _jquery2['default'])(e.target);
-    _jquery2['default'].ajax({
-      method: 'DELETE',
-      url: '/admin/articles/' + id.data('id')
-    }).then(function (respond) {
-      tbody.empty();
-      respond.forEach(function (_ref) {
-        var title = _ref.title;
-        var body = _ref.body;
-        var id = _ref.id;
-
-        tbody.append('<tr>\n        <td>' + title + '</td>\n        <td><button type="button" data-id="' + id + '" class="btn btn-primary change-article">Spremeni</button></td>\n        <td><button type="button" data-id="' + id + '" class="btn btn-danger delete-article">Izbriši</button></td>\n      </tr>');
-      });
-    });
-  });
-  //   var topics = {};
-  //
-  // $.Topic = function( id ) {
-  //     var callbacks,
-  //         topic = id && topics[ id ];
-  //     if ( !topic ) {
-  //         callbacks = jQuery.Callbacks();
-  //         topic = {
-  //             publish: callbacks.fire,
-  //             subscribe: callbacks.add,
-  //             unsubscribe: callbacks.remove
-  //         };
-  //         if ( id ) {
-  //             topics[ id ] = topic;
-  //         }
-  //     }
-  //     return topic;
-  // };
-  //
-  //   let form = $('#articleForm');
-  //   let input = form.find('input');
-  //   let textarea = form.find('textarea');
-  //   let articleTable = $('.artilceBody');
-  //   $.Topic("add:new:user").subscribe(function ({name, body}){
-  //     $('#displayArticles').append(`<h2>${name}<h2>`);
-  //     $('#displayArticles').append(`<p>${body}<p>`);
-  //   });
-  //
-  //
-  //   form.on('submit', function (e) {
-  //     e.preventDefault();
-  //     $.ajax({
-  //       method: 'POST',
-  //       url: '/admin/articles',
-  //       data: {
-  //         title: input.val(),
-  //         body: textarea.val()
-  //       }
-  //
-  //     }).then(function (respond) {
-  //       $.Topic("add:new:user").publish(respond);
-  //     });
-  //   });
-  //
-  //   $('.pagination').on('click', 'li', function(e) {
-  //     var target = $(e.target);
-  //     console.log(target.html());
-  //     target.parent().addClass('active');
-  //     target.parent().siblings().removeClass('active');
-  //     $.ajax({
-  //       method: 'get',
-  //       url: '/admin/articlePagination/' + target.html(),
-  //     }).then(function (articles) {
-  //       articleTable.empty();
-  //       articles.forEach(function ({title, body}) {
-  //         articleTable.append(`<tr>
-  //           <td>${title}</td>
-  //           <td>
-  //             <button type="button" class="btn btn-primary">Spremeni</button>
-  //           </td>
-  //           <td>
-  //             <button type="button" class="btn btn-danger">Izbriši</button>
-  //           </td>
-  //           <tr>`);
-  //       });
-  //     });
-  //   });
+  var article = new _articleArticleModal2['default'](tbody, '#myModal');
 })();
+
+},{"./article/articleModal":3,"jquery":1}],3:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+var _modal = require('./modal');
+
+var _modal2 = _interopRequireDefault(_modal);
+
+var ArticleTable = (function () {
+  function ArticleTable(table, modal) {
+    _classCallCheck(this, ArticleTable);
+
+    this.table = table;
+    this.events();
+    this.modal = new _modal2['default'](modal);
+  }
+
+  _createClass(ArticleTable, [{
+    key: 'http',
+    value: function http(url, param, method) {
+      return ajax({
+        method: method || 'GET',
+        url: url,
+        data: { param: param }
+      });
+    }
+  }, {
+    key: 'events',
+    value: function events() {
+      this.table.on('click', '#delete', function (e) {
+        e.preventDefault();
+        var el = $(e.target);
+        var id = el.data('id');
+        $.ajax({
+          method: 'DELETE',
+          url: '/admin/articles/' + id,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+        }).then(function (respond) {
+          el.closest('tr').remove();
+        });
+      });
+    }
+  }, {
+    key: 'displayUsers',
+    value: function displayUsers(users) {
+      var _this = this;
+
+      this.table.empty();
+      users.forEach(function (user, index) {
+        _this.table.append(_this.template(user));
+      });
+    }
+  }, {
+    key: 'template',
+    value: function template(user) {
+      return '\n        <tr>\n          <td>' + user.id + '</td><td>' + user.name + '</td><td>' + user.email + '</td><td>' + user.rights + '</td>\n          <td><button type="button" id="change"class="btn btn-info" data-toggle="modal" data-target="#myModal" >Spremeni</button></td>\n          <td><button type="button" id="delete" class="btn btn-danger" data-id="' + user.id + '">Izbriši</button></td>\n        <tr>';
+    }
+  }]);
+
+  return ArticleTable;
+})();
+
+exports['default'] = ArticleTable;
+module.exports = exports['default'];
+
+},{"./modal":4}],4:[function(require,module,exports){
+/*jshint esnext: true */
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+require('jquery');
+
+var _jquery = require('jquery');
+
+var Modal = (function () {
+  function Modal(modal) {
+    _classCallCheck(this, Modal);
+
+    this.modal = $(modal);
+    this.events();
+  }
+
+  _createClass(Modal, [{
+    key: 'events',
+    value: function events() {
+      var _this = this;
+      this.modal.on('shown.bs.modal', function (e) {
+        var input = $(e.relatedTarget).parent().siblings();
+        var modal = $(this);
+        modal.find('.modal-body').html(_this.template(_this.getParams(input)));
+      });
+
+      $('#save-modal').on('click', function (e) {
+        var newInput = $(e.target).parent().siblings('.modal-body').find('input, textarea');
+        var id = newInput[0].value;
+        var title = newInput[1].value;
+        var body = newInput[2].value;
+        _this.http('/admin/articles/' + id, { body: body, title: title }, 'PUT').then(function (res) {
+          alert(res);
+        });
+      });
+    }
+  }, {
+    key: 'getParams',
+    value: function getParams(data, method) {
+      var title = $.trim($(data[0]).text());
+      var id = $.trim($(data[0]).data('id'));
+      return { id: id, title: title };
+    }
+  }, {
+    key: 'http',
+    value: function http(url, param, method) {
+      return (0, _jquery.ajax)({
+        method: method || 'GET',
+        url: url,
+        data: param
+      });
+    }
+  }, {
+    key: 'template',
+    value: function template(_ref) {
+      var id = _ref.id;
+      var title = _ref.title;
+
+      return '\n      <form class="form-horizontal">\n      <input type="hidden" class="form-control" id="articles-form" value=' + id + '>\n        <div class="form-group">\n          <label for="textarea" class="col-sm-2 control-label">Title:</label>\n          <div class="col-sm-10">\n            <input type="text" class="form-control" id="title" value=' + title + '>\n          </div>\n        </div>\n        <div class="form-group">\n          <label for="textarea" class="col-sm-2 control-label">Text area:</label>\n          <div class="col-sm-10">\n            <textarea class="form-control"  rows="3"> </textarea>\n          </div>\n        </div>\n      </form>\n      ';
+    }
+  }]);
+
+  return Modal;
+})();
+
+exports['default'] = Modal;
+module.exports = exports['default'];
 
 },{"jquery":1}]},{},[2]);
 

@@ -9226,10 +9226,6 @@ var _usersDisplayUsers = require('./users/displayUsers');
 
 var _usersDisplayUsers2 = _interopRequireDefault(_usersDisplayUsers);
 
-var _usersModal = require('./users/modal');
-
-var _usersModal2 = _interopRequireDefault(_usersModal);
-
 (function (window) {
   _jquery2['default'].ajaxSetup({
     headers: {
@@ -9238,7 +9234,7 @@ var _usersModal2 = _interopRequireDefault(_usersModal);
   });
   var table = (0, _jquery2['default'])('tbody');
   var filter = (0, _jquery2['default'])('#filter');
-  var UserTable = new _usersDisplayUsers2['default'](table, "#myModal");
+  var UserTable = new _usersDisplayUsers2['default'](table, '#myModal');
 
   filter.on('keyup', function (e) {
     e.preventDefault();
@@ -9250,7 +9246,7 @@ var _usersModal2 = _interopRequireDefault(_usersModal);
   });
 })(window);
 
-},{"./users/displayUsers":3,"./users/modal":4,"jquery":1}],3:[function(require,module,exports){
+},{"./users/displayUsers":3,"jquery":1}],3:[function(require,module,exports){
 /*jshint esnext: true */
 'use strict';
 
@@ -9322,8 +9318,7 @@ var UsersTable = (function () {
   return UsersTable;
 })();
 
-exports['default'] = UsersTable;
-module.exports = exports['default'];
+exports.UsersTable = UsersTable;
 
 },{"./modal":4,"jquery":1}],4:[function(require,module,exports){
 /*jshint esnext: true */
@@ -9358,12 +9353,14 @@ var Modal = (function () {
         var modal = $(this);
         modal.find('.modal-body').html(_this.template(_this.getParams(input, 'text')));
       });
+
       $('#save-modal').on('click', function (e) {
         var newInput = $(e.target).parent().siblings('.modal-body').find('input, select');
         var input = _this.getParams(newInput, 'val');
         _this.http('/admin/users/' + input.id, input, 'PUT').then(function (res) {
           alert(res.text);
         }, function (e) {
+
           console.log(e);
         });
       });

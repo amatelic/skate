@@ -23,7 +23,7 @@ import $ from 'jquery';
   loadButton.on('click', ajaxCall);
 
   function template(collection, year) {
-    let template = `<h3>Leto ${year}</h3><hr/><div class='skavt-gallery'>`;
+    let template = `<h3>Leto ${year}</h3><div class='skavt-gallery'>`;
     collection.forEach((collection) => {
       template += `<a href='${collection}' data-lightbox='image-1' data-title='skavt-post'>
     <img class='skavt-post-image' src='${collection}'></a>`;

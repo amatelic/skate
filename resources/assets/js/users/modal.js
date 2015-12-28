@@ -3,29 +3,32 @@ import 'jquery';
 import {ajax} from 'jquery';
 
 export default class Modal {
-  constructor(modal){
+  constructor(modal) {
     this.modal = $(modal);
     this.events();
   }
-  events(){
+  events() {
     let _this = this;
-    this.modal.on('shown.bs.modal', function (e) {
+    this.modal.on('shown.bs.modal', function(e) {
       let input =  $(e.relatedTarget).parent().siblings();
       let modal = $(this);
       modal.find('.modal-body').html(_this.template(_this.getParams(input, 'text')));
     });
-    $('#save-modal').on('click', function (e) {
+
+    $('#save-modal').on('click', function(e) {
       let newInput = $(e.target).parent().siblings('.modal-body').find('input, select');
       var input = _this.getParams(newInput, 'val');
-      _this.http('/admin/users/'+ input.id, input, 'PUT')
-        .then(function (res) {
+      _this.http('/admin/users/' + input.id, input, 'PUT')
+        .then(function(res) {
           alert(res.text);
-        }, function (e) {
+        }, function(e) {
+
           console.log(e);
         });
     });
   }
-  getParams(data, method){
+  
+  getParams(data, method) {
     let id = $(data[0])[method]();
     let name = $(data[1])[method]();
     let email = $(data[2])[method]();
@@ -33,14 +36,16 @@ export default class Modal {
     return {id, name, email, role};
 
   }
+
   http(url, param, method) {
     return ajax({
       method: method || 'GET',
       url: url,
-      data: param
+      data: param,
     });
   }
-  template({id, name, email, role}){
+
+  template({id, name, email, role}) {
     return `
       <form class="form-horizontal">
       <input type="hidden" class="form-control" id="username" value=${id}>

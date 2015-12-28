@@ -10998,7 +10998,7 @@ var _jquery2 = _interopRequireDefault(_jquery);
   loadButton.on('click', ajaxCall);
 
   function template(collection, year) {
-    var template = '<h3>Leto ' + year + '</h3><hr/><div class=\'skavt-gallery\'>';
+    var template = '<h3>Leto ' + year + '</h3><div class=\'skavt-gallery\'>';
     collection.forEach(function (collection) {
       template += '<a href=\'' + collection + '\' data-lightbox=\'image-1\' data-title=\'skavt-post\'>\n    <img class=\'skavt-post-image\' src=\'' + collection + '\'></a>';
     });
@@ -11059,10 +11059,10 @@ var Images = (function () {
     _classCallCheck(this, Images);
 
     this.el = (0, _jquery2['default'])(el);
-    this.myDropzone = new _dropzone2['default']("#my-dropzone");
+    this.myDropzone = new _dropzone2['default']('#my-dropzone');
     _dropzone2['default'].autoDiscover = false;
     this.articleId = 1;
-    this.imageEl = (0, _jquery2['default'])("#images");
+    this.imageEl = (0, _jquery2['default'])('#images');
     this.allImages = (0, _jquery2['default'])('img');
     this.events();
   }
@@ -11091,8 +11091,8 @@ var Images = (function () {
           _this.showOnArticle(article.title);
         });
       });
-      this.myDropzone.on("sending", (function (file, xhr, formData) {
-        formData.append("article_id", this.articleId);
+      this.myDropzone.on('sending', (function (file, xhr, formData) {
+        formData.append('article_id', this.articleId);
       }).bind(this));
     }
   }, {
@@ -11105,9 +11105,14 @@ var Images = (function () {
     value: function showImages(images, id) {
       var _this2 = this;
 
+      if (!Array.isArray(images)) {
+        return;
+      }
+
       this.imageEl.empty();
+
       images.forEach(function (image) {
-        _this2.imageEl.append('\n        <div id="images" data-id="' + id + '" class="images-cover  col-md-3">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
+        _this2.imageEl.append('\n        <div id=\'images\' data-id="' + id + '" class="images-cover  col-md-3">\n          <img src="../' + image + '"">\n        </div>').slideDown(2000);
       });
     }
   }, {

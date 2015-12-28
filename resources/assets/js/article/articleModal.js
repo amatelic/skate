@@ -1,9 +1,6 @@
-/*jshint esnext: true */
-import 'jquery';
-import {ajax} from 'jquery';
 import Modal from './modal';
 
-export class UsersTable {
+export default class ArticleTable {
     constructor(table, modal) {
       this.table = table;
       this.events();
@@ -20,8 +17,18 @@ export class UsersTable {
 
     events() {
       this.table.on('click',  '#delete', (e) => {
-        var id = $(e.target).data('id');
-        this.http('/admin/users/' + id, {}, 'DELETE').then((data) => alert(data.text));
+        e.preventDefault();
+        var el = $(e.target);
+        var id = el.data('id');
+        $.ajax({
+          method: 'DELETE',
+          url: '/admin/articles/' + id,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+          },
+        }).then((respond) => {
+          el.closest('tr').remove();
+        });
       });
     }
 
@@ -36,7 +43,7 @@ export class UsersTable {
       return `
         <tr>
           <td>${user.id}</td><td>${user.name}</td><td>${user.email}</td><td>${user.rights}</td>
-          <td><button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" >Spremeni</button></td>
+          <td><button type="button" id="change"class="btn btn-info" data-toggle="modal" data-target="#myModal" >Spremeni</button></td>
           <td><button type="button" id="delete" class="btn btn-danger" data-id="${user.id}">Izbriši</button></td>
         <tr>`;
     }

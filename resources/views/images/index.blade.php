@@ -4,8 +4,8 @@
     <div class="col-md-4">
       <h2>Izberite leto</h2>
       <select id="chooseYear"  multiple class="form-control">
-        @for($i=(count($years) -1 ); $i >= 0 ; $i--)
-          <option value="{{$years[$i]}}">{{$years[$i]}}</option>
+        @for($i=(int)(date('Y')); $i > 2002; $i--)
+          <option value="{{$i}}">{{$i}}</option>
         @endfor
         {{-- @foreach ($years as $year)
           <option value="{{$year}}">{{$year}}</option>

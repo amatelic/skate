@@ -25,6 +25,14 @@
           <label for="textContent">Vsebina:</label>
           <textarea name="body" id="textContent" class="form-control" rows="3"></textarea>
         </div>
+        <div class="form-group">
+          <label for="textContent">Leto:</label>
+          <select name="year" class="form-control">
+            @for($i=(int)(date('Y')); $i > 2002; $i--)
+              <option value="{{$i}}">{{$i}}</option>
+            @endfor
+          </select>
+        </div>
         <button type="submit" class="btn btn-primary">Objavi</button>
       </form>
     </div>
@@ -32,9 +40,6 @@
       <div class="col-md-6" >
         <div id="displayArticles" class="col-md-12">
           <h2>Zgodovina novic:</h2>
-          <p class="bg-warning">
-            Spreminjanje uporabnika se ne dela
-          </p>
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
@@ -44,34 +49,19 @@
             <tbody class="artilceBody">
               @foreach($articles as $article)
                 <tr>
-                  <td>
-                    {{$article->title}}
+                  <td data-id="{{$article->id}}">
+                    <p class="article-name">{{$article->title}}</p>
                   </td>
                   <td>
-                    <button disabled type="button" data-id="{{$article->id}}" class="btn btn-primary change-article">Spremeni</button>
+                    <button type="button" data-id="{{$article->id}}" id="change" data-toggle="modal" data-target="#myModal" class="btn btn-primary ">Spremeni</button>
                   </td>
                   <td>
-                    <button type="button" data-id="{{$article->id}}" class="btn btn-danger delete-article">Izbriši</button>
+                    <button type="button" data-id="{{$article->id}}" id="delete" class="btn btn-danger ">Izbriši</button>
                   </td>
                 </tr>
               @endforeach
             </tbody>
           </table>
-          <nav>
-          <ul class="pagination">
-              @for($i=1; $i <=$lenght ; $i++)
-                @if($i == 1)
-                <li class="active">
-                  <span>{{$i}}</span>
-                </li>
-                @else
-                <li>
-                  <span>{{$i}}</span>
-                </li>
-                @endif
-              @endfor
-          </ul>
-        </nav>
         </div>
       </div>
     @endif

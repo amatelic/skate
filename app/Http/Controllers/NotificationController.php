@@ -103,7 +103,7 @@ class NotificationController extends Controller
      */
     public function showNotification()
     {
-      $notifications = Notification::all()->take(5);
+      $notifications = Notification::orderBy('id', 'DESC')->take(10)->get();
       return view('index', compact('notifications'));
     }
 

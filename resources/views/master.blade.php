@@ -17,7 +17,7 @@
       @yield('center')
     </div>
     <div id="right">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur a, suscipit eum mollitia at illum ipsum asperiores earum vero quam quas eaque incidunt aliquam odit consequatur, libero beatae explicabo rerum.
+      {{-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur a, suscipit eum mollitia at illum ipsum asperiores earum vero quam quas eaque incidunt aliquam odit consequatur, libero beatae explicabo rerum. --}}
     </div>
   </main>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js" ></script>

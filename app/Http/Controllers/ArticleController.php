@@ -44,13 +44,15 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        $v = Validator::make($request->all(), ['title' => 'required','body' => 'required']);
+        $v = Validator::make($request->all(), ['title' => 'required','body' => 'required', 'year' => 'required']);
 
         if ($v->fails())
         {
             return redirect()->back()->withErrors($v->errors());
         }
+
         $this->createArticle($request);
+
         // $notification = Article::create($request->all());
         return Redirect::to('admin/articles');
     }
@@ -86,7 +88,18 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $v = Validator::make($request->all(), ['title' => 'required','body' => 'required']);
+
+        if ($v->fails())
+        {
+            return "Prislo je do napake";
+        }
+        $article = Article::findOrFail($id);
+        $article->title = $request->get('title');
+        $article->body = $request->get('body');
+        $article->save();
+
+        return "Spremembe so bile shranjene";
     }
 
     /**
@@ -98,17 +111,21 @@ class ArticleController extends Controller
     public function destroy($id)
     {
       $notification = Article::find($id);
+      File::deleteDirectory('photos/' . $notification->image_dir);
       $notification->delete();
-      return Article::orderBy('id', 'DESC')->take(10)->get();;
+      return Article::orderBy('id', 'DESC')->take(10)->get();
     }
 
     public function createArticle($request)
     {
-      Article::create(array(
+      $article = Article::create(array(
         "title" => $request->get('title'),
         "body" => $request->get('body'),
-        "image_dir" => date("Y") . "/" . str_replace(' ', '_', $request->get('title')) . "_" . time(),
+        "image_dir" => $request->get('year') . "/" . str_replace(' ', '_', $request->get('title')) . "_" . time(),
       ));
+
+      File::makeDirectory('photos/' . $article->image_dir, 0775, true);
+
     }
     public function pagination($id)
     {
